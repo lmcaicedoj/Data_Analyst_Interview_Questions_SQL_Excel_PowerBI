@@ -1,0 +1,19 @@
+WITH oldestparentgroup as (
+Select  person.id, parent.parentid, person.name, person.age, parent.personid as sonsid
+From person
+Left Join parent
+On person.id = parent.parentid
+Where age >= 65
+order by age Desc
+)
+
+Select  oldestparentgroup.name, count(personid) as grandsons
+From oldestparentgroup
+Right Join parent
+On oldestparentgroup.sonsid = parent.parentid
+Where name is not null
+Group by name
+Order by grandsons Desc
+
+
+
